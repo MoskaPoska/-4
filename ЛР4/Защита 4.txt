@@ -1,0 +1,32 @@
+procedure TForm1.PaintBox1Paint(Sender: TObject; Canvas: TCanvas);
+var
+  i: Integer;
+  p: TPicData;
+  t: TTextData;
+  l: TLineData;
+  e: TEllipseData;
+  frr: TFillRoundedRectangleData;
+begin
+  PaintBox1.Canvas.BeginScene();
+
+  for l in linelist do
+    TMyCommands.DrawMyLine(l.p1, l.p2, Canvas, StrToInt('$ff' + l.color));
+
+  for e in ellipselist do
+    TMyCommands.DrawMyEllipse(e.x1, e.y1, e.x2, e.y2, Canvas, StrToInt('$ff' + e.color));
+
+  for t in textlist do
+    TMyCommands.DrawMyText(t.x1, t.y1, t.x2, t.y2, t.text, 30, Canvas, StrToInt('$ff' + t.color));
+
+  for p in piclist do
+    TMyCommands.DrawImage(p.x, p.y, p.pic, Canvas);
+
+  for frr in fillroundedrectanglelist do
+    TMyCommands.FillRoundedRectangle(frr.x1, frr.y1, frr.x2, frr.y2, frr.radius,
+      Canvas, StrToInt('$ff' + frr.color));
+
+  // Отобразить текущее время в верхнем заголовке формы
+  Label2.Text := 'Current Time: ' + FormatDateTime('hh:nn:ss', Now);
+
+  PaintBox1.Canvas.EndScene;
+end;
